@@ -4,16 +4,16 @@ const service = axios.create({
     timeout: 50000, // request timeout
     withCredentials: true
 })
-service.interceptors.request.use(function (config) {
+service.interceptors.request.use(function(config) {
     return config;
-}, function (error) {
+}, function(error) {
     return Promise.reject(error);
 });
 
 // Add a response interceptor
-service.interceptors.response.use(function (response) {
+service.interceptors.response.use(function(response) {
     return response;
-}, function (error) {
+}, function(error) {
     return Promise.reject(error);
 });
 export {
