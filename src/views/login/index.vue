@@ -60,9 +60,13 @@ export default {
   methods: {
     handleSubmit (e) {
       e.preventDefault();
-      this.form.validateFields((err, values) => {
+      this.form.validateFields(async (err, values) => {
         if (!err) {
-          login(values)
+          let res = (await login(values)).data
+          console.log(res);
+          if (res.status === "20000") {
+            this.$router.push({ path: '/camera' });
+          }
         }
       })
     },

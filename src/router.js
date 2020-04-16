@@ -3,6 +3,7 @@ import Router from 'vue-router'
 //页面
 import User from './views/user/user.vue'
 import Login from './views/login/index.vue'
+import Camera from './views/camera/index.vue'
 
 Vue.use(Router)
 
@@ -15,5 +16,9 @@ export default new Router({
         path: '/login',
         name: 'Login',
         component: Login
+    }, {
+        path: '/camera',
+        name: 'Camera',
+        component: Camera
     }]
 })
