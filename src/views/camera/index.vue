@@ -18,6 +18,7 @@
 </template>
 <script>
 // api
+import { upLoadImg } from '../../api/user/user';
 
 export default {
   name: 'Camera',
@@ -40,12 +41,21 @@ export default {
       })
 
     },
+    dataURLtoFile (dataurl, filename) {
+      var arr = dataurl.split(',');
+      var mime = arr[0].match(/:(.*?);/)[1];
+      var bstr = atob(arr[1]);
+      var n = bstr.length;
+      var u8arr = new Uint8Array(n);
+      while (n--) { u8arr[n] = bstr.charCodeAt(n) }
+      return new File([u8arr], filename, { type: mime })
+    },
+
     // 拍照
     photograph () {
       let ctx = this.$refs['canvas'].getContext('2d')
       // 把当前视频帧内容渲染到canvas上
-      ctx.drawImage(this.$refs['video'], 0, 0, 640,
-        480)
+      ctx.drawImage(this.$refs['video'], 0, 0, 640, 480)
       // 转base64格式、图片格式转换、图片质量压缩
       let imgBase64 = this.$refs['canvas'].toDataURL('image/jpeg', 0.7)
 
@@ -58,16 +68,21 @@ export default {
       let size = (fileLength / 1024).toFixed(2)
       console.log(size)
       // 上传拍照信息 调用接口上传图片 .........
-      let file = this.imgSrc; // 把整个base64给file
+      // let file = this.imgSrc; // 把整个base64给file
       // let type = "image/jpeg";
       // 定义图片类型（canvas转的图片一般都是png，也可以指定其他类型）
       let time = (new Date()).valueOf();//生成时间戳
       let name = time + ".jpg";
       // 定义文件名字（例如：abc.png ， cover.png）
-      let conversions = this.dataURLtoFile(file, name); // 调用base64转图片方法
-      let parms = new FormData();
-      parms.append('file', conversions);
+      let conversions = this.dataURLtoFile(imgBase64, name); // 调用base64转图片方法
+      console.log(conversions);
 
+      let parms = new FormData();
+
+      parms.append('file', conversions);
+      console.log(parms);
+
+      upLoadImg(parms)
       // 保存到本地
       let ADOM = document.createElement('a')
       ADOM.href = imgBase64

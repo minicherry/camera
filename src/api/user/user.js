@@ -18,3 +18,12 @@ export function login(data) {
         data
     })
 }
+
+// 上传图片接口
+export function upLoadImg(data) {
+    return request({
+        url: '/user/upLoadImg',
+        method: 'post',
+        data
+    })
+}
