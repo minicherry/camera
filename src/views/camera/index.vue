@@ -12,6 +12,11 @@
     <a-button type="primary"
               @click="photograph">拍照</a-button>
     <a-button type="primary"
+              @click="startVideo">开始录像</a-button>
+    <a-button type="primary"
+              @click="stopVideo">结束录像</a-button>
+
+    <a-button type="primary"
               @click="closeCamera">关闭摄像头</a-button>
 
   </div>
@@ -81,7 +86,7 @@ export default {
 
       parms.append('file', conversions);
       console.log(parms);
-
+      // 上传图片保存到数据库
       upLoadImg(parms)
       // 保存到本地
       let ADOM = document.createElement('a')
@@ -90,6 +95,12 @@ export default {
       ADOM.click()
     },
 
+    // 开始录像
+    startVideo () {
+
+    },
+    //结束录像
+    stopVideo () { },
     // 上传图片
     upLoadImage () { },
     // 关闭摄像头
